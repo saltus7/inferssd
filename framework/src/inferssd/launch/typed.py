@@ -448,13 +448,13 @@ def _resolve(
             chosen = dict(cast(Mapping[str, object], planned.receipt.get("chosen", {})))
             actual = {"decode": threads.decode, "batch": threads.batch,
                       "cpus": list(threads.cpus), "decode_cpus": list(threads.decode_cpus)}
-            receipt = dict(planned.receipt, model_defaults={
+            strategy_receipt = dict(planned.receipt, model_defaults={
                 "reason": "qwen4exp CPU compute priors unavailable; use the live fast cluster",
                 "previous_threads": chosen.get("threads", {}), "threads": actual,
             })
             chosen["threads"] = actual
-            receipt["chosen"] = chosen
-            planned = replace(planned, threads=threads, receipt=receipt)
+            strategy_receipt["chosen"] = chosen
+            planned = replace(planned, threads=threads, receipt=strategy_receipt)
     if not ordinary and not value.at("expert.source").value:
         if value.at("expert.source").origin != "default":
             raise ValueError("typed launch requires a nonempty explicit expert.source")
