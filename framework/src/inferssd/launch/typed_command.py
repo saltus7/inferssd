@@ -215,6 +215,7 @@ def run(args: argparse.Namespace) -> int:
             platform=args.platform,
             directory=str(claim.directory),
             memory=policy.memory_budget_bytes,
+            reserve=policy.host_reserve_bytes or 0,
         ),
         observe=adapter,
         emit=emit,
